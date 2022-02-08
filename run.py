@@ -89,6 +89,8 @@ def validate_cli_args(cli_args, parser):
             parser.error(err_msg.format(t1or2, cli_args["input"],
                                         len(img_files)))
 
+    # TODO Ensure that task ID is a 3-digit number starting with 5?
+
     return cli_args
 
 
