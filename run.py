@@ -43,8 +43,9 @@ def get_cli_args():
     """ 
     :return: Dictionary containing all validated command-line input arguments
     """
+    script_dir = os.path.dirname(__file__)
     default_model = "3d_fullres"
-    default_nnUNet_path = "./nnUNet_predict"
+    default_nnUNet_path = os.path.join(script_dir, "nnUNet_predict")
     default_task_ID = 512
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -59,7 +60,9 @@ def get_cli_args():
     )
     parser.add_argument(
         "--nnUNet", "-n", type=valid_readable_file, default=default_nnUNet_path,
-        help=("Valid path to existing executable file to run nnU-Net_predict.")
+        help=("Valid path to existing executable file to run nnU-Net_predict. "
+              "By default, this script will assume that nnU-Net_predict will "
+              "be in the same directory as this script: {}".format(script_dir))
     )
     parser.add_argument(  # TODO Does this even need to be an argument, or will it always be the default?
         "--task", "-t", type=valid_whole_number, default=default_task_ID,
