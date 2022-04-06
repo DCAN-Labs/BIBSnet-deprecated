@@ -1,6 +1,10 @@
 ARG FROM_IMAGE_NAME=nvcr.io/nvidia/pytorch:21.11-py3
 FROM ${FROM_IMAGE_NAME} 
 
+ENV nnUNet_raw_data_base="/opt/nnUNet/nnUNet_raw_data_base/"
+ENV nnUNet_preprocessed="/opt/nnUNet/nnUNet_raw_data_base/nnUNet_preprocessed"
+ENV RESULTS_FOLDER="/opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models"
+
 ADD ./requirements.txt .
 RUN pip install --disable-pip-version-check -r requirements.txt
 RUN pip install monai==0.8.0 --no-dependencies
