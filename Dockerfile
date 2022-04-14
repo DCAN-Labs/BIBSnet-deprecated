@@ -5,9 +5,9 @@ ENV nnUNet_raw_data_base="/opt/nnUNet/nnUNet_raw_data_base/"
 ENV nnUNet_preprocessed="/opt/nnUNet/nnUNet_raw_data_base/nnUNet_preprocessed"
 ENV RESULTS_FOLDER="/opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models"
 
-RUN mkdir -p /opt/nnUNet/nnUNet_raw_data_base/ /opt/nnUNet/nnUNet_raw_data_base/nnUNet_preprocessed /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet
-COPY Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet
-RUN cd /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet && unzip -qq Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip
+RUN mkdir -p /opt/nnUNet/nnUNet_raw_data_base/ /opt/nnUNet/nnUNet_raw_data_base/nnUNet_preprocessed /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet /results
+COPY trained_models/Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip /results
+RUN cd /results && unzip -qq Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip
 
 ADD ./requirements.txt .
 RUN pip install --disable-pip-version-check -r requirements.txt
@@ -20,4 +20,6 @@ RUN ./aws/install
 RUN rm -rf awscliv2.zip aws
 
 WORKDIR /workspace/nnunet_pyt
-ADD . /workspace/nnunet_pyt 
+ADD . /workspace/nnunet_pyt
+RUN cd /workspace/nnunet_pyt
+ENTRYPOINT ["main.py"] 
