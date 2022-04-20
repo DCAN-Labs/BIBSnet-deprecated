@@ -10,7 +10,7 @@ COPY trained_models/Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip /opt/nnUNet
 RUN cd /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet && unzip -qq Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip
 ADD ./requirements.txt .
 RUN pip install --disable-pip-version-check -r requirements.txt
-RUN pip install torchmetrics=0.6.0
+RUN pip install torchmetrics==0.6.0
 RUN pip install monai==0.8.0 --no-dependencies
 RUN pip uninstall -y torchtext
 
