@@ -63,7 +63,7 @@ ENV PATH=$PATH:/usr/local/miniconda/condabin:/usr/local/miniconda/bin:/usr/local
     CUDA_HOME=/usr/local/cuda 
 
 RUN conda install -y pip numpy ninja pyyaml mkl mkl-include setuptools cmake cffi typing_extensions future six requests dataclasses
-RUN conda install -y --channel pytorch magma-cuda112
+RUN conda install -y pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
 ENV CUDACXX=/usr/local/miniconda/bin \
     CMAKE_PREFIX_PATH=/usr/local/miniconda/bin \
     CUDNN_LIB_DIR=/usr/local/cuda/lib64 \
