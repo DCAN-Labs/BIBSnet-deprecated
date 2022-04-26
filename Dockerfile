@@ -69,12 +69,6 @@ ENV CUDACXX=/usr/local/miniconda/bin \
     CUDNN_LIB_DIR=/usr/local/cuda/lib64 \
     CUDNN_INCLUDE_DIR=/usr/local/cuda/include \
     CUDNN_LIBRARY=/usr/local/cuda/lib64
-# download pytorch repo
-RUN mkdir github && \
-    cd github && \
-    git clone --recursive https://github.com/pytorch/pytorch && \
-    cd pytorch && \
-    /usr/local/miniconda/bin/python ./setup.py install
 RUN cd .. && \
     git clone https://github.com/MIC-DKFZ/nnUNet.git && \
     cd nnUNet && \
