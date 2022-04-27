@@ -34,6 +34,8 @@ def run_nnUNet_predict(cli_args):
     :param cli_args: Dictionary containing all command-line input arguments
     :return: N/A
     """
+    # task needs to be a string, changing type here to try and get it to work: TJH 4/26/2022
+    cli_args["task"] = str(cli_args["task"])
     subprocess.check_call((cli_args["nnUNet"],
                            "-i", cli_args["input"], "-o", cli_args["output"],
                            "-t", cli_args["task"], "-m", cli_args["model"]))
