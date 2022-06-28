@@ -6,7 +6,7 @@ Wrapper to run nnU-Net_predict with model 512, produced via training on BCP
 subjects of ages 0-8 months
 Greg Conan: gconan@umn.edu
 Created: 2022-02-08
-Updated: 2022-02-08
+Updated: 2022-06-28
 """
 # Import standard libraries
 import argparse
@@ -34,11 +34,18 @@ def run_nnUNet_predict(cli_args):
     :param cli_args: Dictionary containing all command-line input arguments
     :return: N/A
     """
-    # task needs to be a string, changing type here to try and get it to work: TJH 4/26/2022
-    cli_args["task"] = str(cli_args["task"])
-    subprocess.check_call((cli_args["nnUNet"],
-                           "-i", cli_args["input"], "-o", cli_args["output"],
-                           "-t", cli_args["task"], "-m", cli_args["model"]))
+    subprocess.call((cli_args["nnUNet"], "-i",
+                     cli_args["input"], "-o", cli_args["output"], "-t",
+                     str(cli_args["task"]), "-m", cli_args["model"]))
+    
+    # Only raise an error if there are no output segmentation file(s)
+    if not glob(os.path.join(cli_args["output"], "*.nii.gz")):
+        # NOTE This statement should change if we add a new model
+        sys.exit("Error: Output segmentation file not created at the path "
+                 "below during nnUNet_predict run.\n{}\n\nFor your input files "
+                 "at the path below, check their filenames and visually "
+                 "inspect them if needed.\n{}\n\n"
+                 .format(cli_args["output"], cli_args["input"]))
 
 
 def get_cli_args():
