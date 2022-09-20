@@ -2,9 +2,8 @@
     "title": "BIBSnet",
     "description": "<p>Quickly and accurately segments an optimally-aligned T1 and T2 pair with a deep neural network trained via nnU-Net and SynthSeg with a large 0 to 8 month old infant MRI brain dataset.</p>", 
     "license": "BSD-3-Clause license",
-    "version": "1.5.0", 
     "upload_type": "software", 
-    "publication_date": "2022-08-24", 
+    "publication_date": "", 
     "creators": [
         {
             "name": "Hendrickson, Timothy J.",
@@ -95,12 +94,12 @@
     "related_identifiers": [
         {
             "scheme": "url", 
-            "identifier": "https://github.com/DCAN-Labs/CABINET/tree/1.5.0", 
+            "identifier": "https://https://github.com/DCAN-Labs/BIBSnet", 
             "relation": "isSupplementTo"
         }, 
         {
             "scheme": "doi", 
-            "identifier": "10.5281/zenodo.7019701", 
+            "identifier": "", 
             "relation": "isVersionOf"
         }
     ]
