@@ -3,7 +3,7 @@
     "description": "<p>Quickly and accurately segments an optimally-aligned T1 and T2 pair with a deep neural network trained via nnU-Net and SynthSeg with a large 0 to 8 month old infant MRI brain dataset.</p>", 
     "license": "BSD-3-Clause license",
     "upload_type": "software", 
-    "publication_date": "", 
+    "publication_date": "2022-09-20", 
     "creators": [
         {
             "name": "Hendrickson, Timothy J.",
