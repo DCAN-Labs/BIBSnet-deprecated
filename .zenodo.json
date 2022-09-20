@@ -1,6 +1,6 @@
 {
     "title": "BIBSnet",
-    "description": "<p>This software provides the utility of creating a nnU-Net anatomical MRI segmentation and mask with a infant brain trained model for the purposes of circumventing JLF within Nibabies.</p>", 
+    "description": "<p>Quickly and accurately segments an optimally-aligned T1 and T2 pair with a deep neural network trained via nnU-Net and SynthSeg with a large 0 to 8 month old infant MRI brain dataset.</p>", 
     "license": "BSD-3-Clause license",
     "version": "1.5.0", 
     "upload_type": "software", 
