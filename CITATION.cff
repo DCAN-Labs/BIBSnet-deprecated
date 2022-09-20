@@ -52,38 +52,10 @@ authors:
   given-names: "Eric"
   orcid: "https://orcid.org/0000-0003-1337-5517"
 title: "BIBSnet"
-version: 1.0.0
 doi: 10.5281/zenodo.7019702
 date-released: 2022-08-30
 url: "https://github.com/DCAN-Labs/BIBSnet"
 references:
-  - authors:
-      - family-names: "Analysis Group, FMRIB, Oxford, UK"
-    title: "FSL: FMRIB SOFTWARE LIBRARY"
-    type: software
-    version: 6.0.5.1
-  - authors:
-      - family-names: "Jenkinson et al."
-    doi: 0.1016/j.neuroimage.2011.09.015
-    journal: "Neuroimage"
-    scope: "Cite this paper if you want to reference the general concepts of the software."
-    title: "FSL"
-    type: article
-    volume: 62
-    year: 2012
-  - authors:
-      - family-names: "Avants et al."
-    title: "Advanced normalization tools (ANTS)"
-    type: software
-    version: 2.3.3
-  - authors:
-      - family-names: "Avants et al."
-    doi: 10.54294/uvnhin
-    journal: "OR Insight"
-    scope: "Cite this paper if you want to reference the general concepts of the software."
-    title: "Advanced normalization tools (ANTS)"
-    type: article
-    year: 2008
   - authors:
       - family-names: "Isensee et al."
     repository-code: "https://github.com/MIC-DKFZ/nnUNet"
@@ -99,11 +71,6 @@ references:
     type: article
     volume: 18
     year: 2021  
-  - authors:
-      - family-names: "Developmental Cognition and Neuroimaging Labs"
-    repository-code: "https://github.com/DCAN-Labs/BIBSnet"
-    title: "BIBSnet"
-    type: software
   - authors:
       - family-names: "Billot et al."
     doi: 10.48550/arXiv.2107.09559
