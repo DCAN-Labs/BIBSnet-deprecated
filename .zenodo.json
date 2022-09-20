@@ -90,17 +90,5 @@
             "orcid": "0000-0003-1337-5517"
         }
     ], 
-    "access_right": "open", 
-    "related_identifiers": [
-        {
-            "scheme": "url", 
-            "identifier": "https://https://github.com/DCAN-Labs/BIBSnet", 
-            "relation": "isSupplementTo"
-        }, 
-        {
-            "scheme": "doi", 
-            "identifier": "", 
-            "relation": "isVersionOf"
-        }
-    ]
+    "access_right": "open"
 }
