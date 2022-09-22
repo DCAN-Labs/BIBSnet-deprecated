@@ -95,13 +95,13 @@
     "related_identifiers": [
         {
             "scheme": "url", 
-            "identifier": "https://github.com/DCAN-Labs/BIBSnet/tree/v1.0.0", 
-            "relation": "isSupplementTo"
+            "identifier": "https://github.com/DCAN-Labs/BIBSnet", 
+            "relation": "documents"
         }, 
         {
             "scheme": "doi", 
             "identifier": "10.5281/zenodo.7106147", 
-            "relation": "isVersionOf"
+            "relation": "isPartOf"
         }
     ]
 }
