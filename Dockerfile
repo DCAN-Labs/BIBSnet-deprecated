@@ -35,7 +35,7 @@ WORKDIR /home/bibsnet
 ENV HOME="/home/bibsnet" \
     LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
 RUN cd .. && \
-    git clone https://github.com/MIC-DKFZ/nnUNet.git && \
+    git clone https://github.com/ylugithub/nnUNet.git && \
     cd nnUNet && \
     pip install -e .
 
