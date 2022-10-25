@@ -2,17 +2,18 @@
 # coding: utf-8
 
 """
-Wrapper to run nnU-Net_predict with model 512, produced via training on BCP
-subjects of ages 0-8 months
+Wrapper to run nnU-Net_predict trained on BCP subjects
 Greg Conan: gconan@umn.edu
 Created: 2022-02-08
-Updated: 2022-06-28
+Updated: 2022-10-24
 """
 # Import standard libraries
 import argparse
 from datetime import datetime 
+from fnmatch import fnmatch
 from glob import glob
 import os
+import pandas as pd
 import subprocess
 import sys
 
@@ -40,7 +41,7 @@ def run_nnUNet_predict(cli_args):
     
     # Only raise an error if there are no output segmentation file(s)
     if not glob(os.path.join(cli_args["output"], "*.nii.gz")):
-        # NOTE This statement should change if we add a new model
+        # TODO This statement should change if we add a new model
         sys.exit("Error: Output segmentation file not created at the path "
                  "below during nnUNet_predict run.\n{}\n\nFor your input files "
                  "at the path below, check their filenames and visually "
@@ -59,13 +60,16 @@ def get_cli_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input", "-i", type=valid_readable_dir, required=True,
-        help=("Valid path to existing input directory following valid nnU-Net "
-              "naming conventions (T1w files end with _0000.nii.gz and T2w "
-              "end with _0001.nii.gz). There should be exactly 1 T1w file and "
-              "exactly 1 T2w file in this directory.")
+        help=("Valid path to existing input directory with 1 T1w file and/or "
+              "1 T2w file. T1w files should end with '_0000.nii.gz'. "
+              "T2w files only should for T1w-and-T2w model(s). For T2w-only "
+              "model(s), T2w files should end with '_0001.nii.gz'.")
     )
     parser.add_argument(
         "--output", "-o", type=valid_output_dir, required=True,
+        help=("Valid path to a directory to save BIBSnet output files into. "
+              "If this directory or its parent directory/ies does not exist, "
+              "then they will automatically be created.")
     )
     parser.add_argument(
         "--nnUNet", "-n", type=valid_readable_file, default=default_nnUNet_path,
@@ -73,36 +77,68 @@ def get_cli_args():
               "By default, this script will assume that nnU-Net_predict will "
               "be in the same directory as this script: {}".format(script_dir))
     )
-    parser.add_argument(  # TODO Does this even need to be an argument, or will it always be the default?
+    parser.add_argument(
         "--task", "-t", type=valid_whole_number, default=default_task_ID,
         help=("Task ID, which should be a 3-digit positive integer starting "
-              "with 5 (e.g. 512).")
+              "with 5 (e.g. 512). The default task ID is {}."
+              .format(default_task_ID))
     )
     parser.add_argument(  # TODO Does this even need to be an argument, or will it always be the default?
-        "--model", "-m", default=default_model
+        "--model", "-m", default=default_model,
+        help=("Name of the nnUNet model to run. By default, it will run '{}'."
+              .format(default_model))
     )
-    return validate_cli_args(vars(parser.parse_args()), parser)
+    return validate_cli_args(vars(parser.parse_args()), script_dir, parser)
 
 
-def validate_cli_args(cli_args, parser):
+def validate_cli_args(cli_args, script_dir, parser):
     """
+    Verify that at least 1 T1w and/or 1 T2w file (depending on the task ID)
+    exists in the --input directory
     :param cli_args: Dictionary containing all command-line input arguments
+    :param script_dir: String, valid path to existing dir containing run.py
     :param parser: argparse.ArgumentParser to raise error if anything's invalid
     :return: cli_args, but with all input arguments validated
     """
-    # Verify that there is exactly 1 T1w file and exactly 1 T2w file in the
-    # --input directory
-    err_msg = ("There must be exactly 1 T{0}w file in {1} directory, but the "
-               "number of T{0}w files there currently is {2}")
-    t1or2_path_format = os.path.join(cli_args["input"], "*_000{}.nii.gz")
+    # Get info about which task ID(s) need T1s and which need T2s from .csv
+    try:
+        models_csv_path = os.path.join(script_dir, "models.csv")  # TODO Should we make this file path an input argument?
+        tasks = pd.read_csv(models_csv_path, index_col=0)
+        specified_task = tasks.loc[cli_args["task"]]
+
+    # Verify that the specified --task number is a valid task ID
+    except OSError:
+        parser.error("{} not found. This file is needed to determine nnUNet "
+                     "requirements for BIBSnet task {}."
+                     .format(models_csv_path, cli_args["task"]))
+    except KeyError:
+        parser.error("BIBSnet task {0} is not in {1} so its requirements are "
+                     "unknown. Add a task {0} row in that .csv or try one of "
+                     "these tasks: {2}"
+                     .format(cli_args["task"], models_csv_path, 
+                             tasks.index.values.tolist()))
+
+    # Validate that BIBSnet has all T1w/T2w input file(s) needed for --task
+    err_msg = ("BIBSnet task {} requires image file(s) at the path(s) below, "
+               "and at least 1 is missing. Either save the image file(s) "
+               "there or try a different task.\n{}")
+    img_glob_path = os.path.join(cli_args["input"], "*_000{}.nii.gz")
+    how_many_T_expected = 0
     for t1or2 in (1, 2):
-        img_files = glob(t1or2_path_format.format(t1or2 - 1))
-        if len(img_files) != 1:
-            parser.error(err_msg.format(t1or2, cli_args["input"],
-                                        len(img_files)))
-
-    # TODO Ensure that task ID is a 3-digit number starting with 5?
-
+        # TODO Should this verify that ONLY one T1w file and/or ONLY one T2w file exists?
+        if specified_task.get("T{}w".format(t1or2)):
+            how_many_T_expected += 1
+    img_files = glob(img_glob_path.format("?"))
+    if how_many_T_expected == 2 and len(img_files) < 2:
+        parser.error(err_msg.format(cli_args["task"], "\n".join((
+            img_glob_path.format(0), img_glob_path.format(1)
+        ))))
+    elif how_many_T_expected == 1 and (
+            len(img_files) < 1 or not fnmatch(img_files[0],
+                                              img_glob_path.format(0))
+        ):
+        parser.error(err_msg.format(cli_args["task"], img_glob_path.format(0)))
+        
     return cli_args
 
 
