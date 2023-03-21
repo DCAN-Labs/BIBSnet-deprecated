@@ -28,6 +28,26 @@ optional arguments:
 --model MODEL, -m MODEL
 ```
 
+## Container
+When running CABINET using a GPU, the job typically takes about 4 minutes, 2 tasks, and one node with 20 gb of memory to run effectively.
+
+This has been primarily tested in Singularity. We are less able to provide technical support for Docker execution.
+
+### Singularity
+
+#### Download
+`singularity pull docker://dcanumn/BIBSNet`
+
+#### Usage
+```
+singularity run --nv --cleanenv --no-home \
+-B /path/to/input:/input \
+-B /path/to/output:/output \
+-B /path/to/param_file.json:/param_file.json \
+/home/faird/shared/code/internal/pipelines/cabinet_container/cabinet_1_3_2.sif \
+/input /output participant -jargs /param_file.json -end postbibsnet -v
+```
+
 ## BIBSnet Segmentation Models
 
 `data/models.csv` lists all available BIBSnet models to run. Below are the default BIBSnet models, all trained on manually-segmented 0- to 8-month-old BCP subjects' segmentations. 
