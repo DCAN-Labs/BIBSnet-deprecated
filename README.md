@@ -43,9 +43,8 @@ This has been primarily tested in Singularity. We are less able to provide techn
 singularity run --nv --cleanenv --no-home \
 -B /path/to/input:/input \
 -B /path/to/output:/output \
--B /path/to/param_file.json:/param_file.json \
-/home/faird/shared/code/internal/pipelines/cabinet_container/cabinet_1_3_2.sif \
-/input /output participant -jargs /param_file.json -end postbibsnet -v
+/path/to/BIBSNet.sif \
+--input /input --output /output --task <task ID> --model 3d_fullres 
 ```
 
 ## BIBSnet Segmentation Models
