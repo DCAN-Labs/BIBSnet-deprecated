@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7106148.svg)](https://doi.org/10.5281/zenodo.7106148)
 
-Quickly and accurately segments an optimally-aligned T1 and T2 pair with a deep neural network trained via nnU-Net and SynthSeg with a large 0 to 8 month old infant MRI brain dataset.
+Quickly and accurately segments an optimally-aligned T1 and T2 pair with a deep neural network trained via nnU-Net and SynthSeg with a large 0 to 8 month old infant MRI brain dataset. Please note that this only runs BIBSnet, not pre- or post-BIBSnet. 
 
 ## Command-Line Arguments
 ```
@@ -28,6 +28,11 @@ optional arguments:
 --model MODEL, -m MODEL
 ```
 
+## Inputs and Outputs
+If there is both a T1 and T2, BIBSnet expects them to be aligned with each other, otherwise the segmentation will not work properly. 
+
+Outputs may need to be chirality corrected, which can be done with post-BIBSnet. The outputs will be in the space that the anatomical was aligned with, i.e. if the T1 was aligned to the T2, the output will be in T2 space and vice versa. 
+
 ## Container
 When running CABINET using a GPU, the job typically takes about 4 minutes, 2 tasks, and one node with 20 gb of memory to run effectively.
 
@@ -48,6 +53,8 @@ singularity run --nv --cleanenv --no-home \
 ```
 
 ## BIBSnet Segmentation Models
+
+For choosing the model, be sure to choose the model according to what anatomicals you are providing. The task id you provide with the --task flag needs to correlate with the model number.
 
 `data/models.csv` lists all available BIBSnet models to run. Below are the default BIBSnet models, all trained on manually-segmented 0- to 8-month-old BCP subjects' segmentations. 
 
