@@ -28,11 +28,6 @@ optional arguments:
 --model MODEL, -m MODEL
 ```
 
-## Inputs and Outputs
-If there is both a T1 and T2, BIBSnet expects them to be aligned with each other, otherwise the segmentation will not work properly. 
-
-Outputs may need to be chirality corrected, which can be done with post-BIBSnet. The outputs will be in the space that the anatomical was aligned with, i.e. if the T1 was aligned to the T2, the output will be in T2 space and vice versa. 
-
 ## Container
 When running CABINET using a GPU, the job typically takes about 4 minutes, 2 tasks, and one node with 20 gb of memory to run effectively.
 
@@ -54,7 +49,7 @@ singularity run --nv --cleanenv --no-home \
 
 ## BIBSnet Segmentation Models
 
-For choosing the model, be sure to choose the model according to what anatomicals you are providing. The task id you provide with the --task flag needs to correlate with the model number.
+For choosing the model, be sure to choose the model according to what anatomicals you are providing. The task ID you provide with the --task flag needs to correlate with the model number.
 
 `data/models.csv` lists all available BIBSnet models to run. Below are the default BIBSnet models, all trained on manually-segmented 0- to 8-month-old BCP subjects' segmentations. 
 
@@ -66,5 +61,14 @@ For choosing the model, be sure to choose the model according to what anatomical
 | 515 | Default T2w-only model |
 
 Additionally, see the "location" column within `data/models.csv` to download the models. The models are publically available and can be pulled down with CLI tools such as wget. For example to pull down model 512 something like this work: `wget https://s3.msi.umn.edu/CABINET_data/Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip`
+
+## Inputs
+
+If you provide an input directory with both a T1w and a T2w, BIBSnet expects them to be aligned. If they are not aligned, the outputted segmentation will be inaccurate. It is also recommended to crop the input images just below the head to ensure the best results.
+Input files must be identified with _0000 and _0001 at the end of the file names for T1w and T2w, respectively. If there is only one anatomical image, regardless of it being T1w or T2w, the file will need to be named with _0000 at the end. You will need to average images of the same anatomical file type if you have more than one T1w or T2w image.
+
+## Outputs
+
+Outputs may need to be chirality corrected, which can be done with post-BIBSnet. The outputs will be in the space that the anatomical was aligned with, i.e. if the T2w was aligned to the T1w, the output will be in T1w space and vice versa. If only one file type is inputted, the output will be in the space of that file.
 
 <br />
