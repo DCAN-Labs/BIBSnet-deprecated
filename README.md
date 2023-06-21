@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7106148.svg)](https://doi.org/10.5281/zenodo.7106148)
 
-Quickly and accurately segments an optimally-aligned T1 and T2 pair with a deep neural network trained via nnU-Net and SynthSeg with a large 0 to 8 month old infant MRI brain dataset. Please note that this only runs BIBSnet, not pre- or post-BIBSnet. 
+Quickly and accurately segments an optimally-aligned T1 and T2 pair with a deep neural network trained via nnU-Net and SynthSeg with a large 0 to 8 month old infant MRI brain dataset. Please note that this only runs BIBSnet, not pre- or post-BIBSnet. For the time being, [here](https://cabinet.readthedocs.io/en/stable/) is the usage for pre- and post-BIBSnet. These will eventually be rolled into the present repository.
 
 ## Command-Line Arguments
 ```
@@ -65,10 +65,10 @@ Additionally, see the "location" column within `data/models.csv` to download the
 ## Inputs
 
 If you provide an input directory with both a T1w and a T2w, BIBSnet expects them to be aligned. If they are not aligned, the outputted segmentation will be inaccurate. It is also recommended to crop the input images just below the head to ensure the best results.
-Input files must be identified with _0000 and _0001 at the end of the file names for T1w and T2w, respectively. If there is only one anatomical image, regardless of it being T1w or T2w, the file will need to be named with _0000 at the end. You will need to average images of the same anatomical file type if you have more than one T1w or T2w image.
+Input files must be identified with _0000 and _0001 at the end of the file names for T1w and T2w, respectively (e.g. a T1w image needs to be named something like sub-XXX_ses-baseline_T1w_0000.nii.gz). If there is only one anatomical image, regardless of it being T1w or T2w, the file will need to be named with _0000 at the end. You will need to average images of the same anatomical file type if you have more than one T1w or T2w image.
 
 ## Outputs
 
-Outputs may need to be chirality corrected, which can be done with post-BIBSnet. The outputs will be in the space that the anatomical was aligned with, i.e. if the T2w was aligned to the T1w, the output will be in T1w space and vice versa. If only one file type is inputted, the output will be in the space of that file.
+Outputs may need to be chirality corrected, which can be done with post-BIBSnet. The usage for post-BIBSnet can be found [here](https://cabinet.readthedocs.io/en/stable/). The outputs will be in the space that the anatomical was aligned with, i.e. if the T2w was aligned to the T1w, the output will be in T1w space and vice versa. If only one file type is inputted, the output will be in the space of that file.
 
 <br />
