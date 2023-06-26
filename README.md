@@ -65,7 +65,7 @@ Additionally, see the "location" column within `data/models.csv` to download the
 ## Inputs
 
 If you provide an input directory with both a T1w and a T2w, BIBSnet expects them to be aligned. If they are not aligned, the outputted segmentation will be inaccurate. It is also recommended to crop the input images just below the head to ensure the best results.
-Input files must be identified with _0000 and _0001 at the end of the file names for T1w and T2w, respectively (e.g. a T1w image needs to be named something like sub-XXX_ses-baseline_T1w_0000.nii.gz). If there is only one anatomical image, regardless of it being T1w or T2w, the file will need to be named with _0000 at the end. You will need to average images of the same anatomical file type if you have more than one T1w or T2w image.
+Input files must be identified with _0000 and _0001 at the end of the file names for T1w and T2w, respectively (e.g. a T1w image needs to be named something like sub-XXX_ses-baseline_T1w_0000.nii.gz). If there is only one anatomical image, regardless of it being T1w or T2w, the file will need to be named with _0000 at the end. Pre-BIBSnet (usage [here](https://cabinet.readthedocs.io/en/stable/) performs each of these preprocessing steps. You will need to average images of the same anatomical file type if you have more than one T1w or T2w image.
 
 ## Outputs
 
