@@ -36,6 +36,7 @@ ENV HOME="/home/bibsnet" \
 RUN cd .. && \
     git clone https://github.com/ylugithub/nnUNet.git && \
     cd nnUNet && \
+    git checkout -b v1.7.1 v1.7.1 && \
     pip install -e .
 
 # set up nnU-Net specific things
