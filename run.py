@@ -55,7 +55,7 @@ def get_cli_args():
     """
     script_dir = os.path.dirname(__file__)
     default_model = "3d_fullres"
-    default_nnUNet_path = os.path.join(script_dir, "nnUNet_predict")
+    default_nnUNet_path = "/opt/conda/bin/nnUNet_predict"
     default_task_ID = 512
     parser = argparse.ArgumentParser()
     parser.add_argument(
