@@ -34,8 +34,9 @@ WORKDIR /home/bibsnet
 ENV HOME="/home/bibsnet" \
     LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
 RUN cd .. && \
-    git clone https://github.com/ylugithub/nnUNet.git && \
+    git clone https://github.com/MIC-DKFZ/nnUNet.git && \
     cd nnUNet && \
+    git checkout -b v1.7.1 v1.7.1 && \
     pip install -e .
 
 # set up nnU-Net specific things
@@ -49,6 +50,7 @@ RUN wget https://s3.msi.umn.edu/CABINET_data/Task512_BCP_ABCD_Neonates_SynthSegD
     wget https://s3.msi.umn.edu/CABINET_data/Task551.zip -O /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet/Task551.zip && \
     wget https://s3.msi.umn.edu/CABINET_data/Task514_BCP_ABCD_Neonates_SynthSeg_T1Only.zip -O /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet/Task514_BCP_ABCD_Neonates_SynthSeg_T1Only.zip && \
     wget https://s3.msi.umn.edu/CABINET_data/Task515_BCP_ABCD_Neonates_SynthSeg_T2Only.zip -O /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet/Task515_BCP_ABCD_Neonates_SynthSeg_T2Only.zip
+RUN wget https://s3.msi.umn.edu/CABINET_data/data.zip -O /home/bibsnet/temp_data.zip && cd /home/bibsnet && unzip -qq temp_data.zip && rm temp_data.zip
 RUN cd /opt/nnUNet/nnUNet_raw_data_base/nnUNet_trained_models/nnUNet && \
     unzip -qq Task551.zip && \
     unzip -qq Task512_BCP_ABCD_Neonates_SynthSegDownsample.zip && \
